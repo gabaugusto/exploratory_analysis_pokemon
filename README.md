@@ -1,6 +1,6 @@
 # exploratory_analysis_pokemon
 
-Starting a new exploration study
+Starting a new exploration study.
 It's not yet finished so don't take this as benchmark. 
 
 Começando um novo estudo exploratório. 
