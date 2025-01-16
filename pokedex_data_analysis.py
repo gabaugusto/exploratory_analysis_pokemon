@@ -244,7 +244,7 @@ plt.ylabel("Number of Pokemon")
 plt.title("Pokemon Type Distribution")
 plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
 plt.tight_layout()
-plt.show()
+# plt.show()
 
 """The percentages here do not help us much as there are lots of repeated IDs, alternative forms and so on...
 
@@ -298,7 +298,7 @@ plt.ylabel("Number of Pokemon")
 plt.title("Pokemon Type Distribution")
 plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
 plt.tight_layout()
-plt.show()
+# plt.show()
 
 # We can see a list of all the columns by name if needed.
 
@@ -342,7 +342,7 @@ for i, feature in enumerate(features_to_plot):
     plt.ylabel(feature)
 
 plt.tight_layout()  # Adjust spacing between plots
-plt.show()
+# plt.show()
 
 # Working with multiples columns as target
 
@@ -388,7 +388,7 @@ for i, feature in enumerate(features_to_plot):
     plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
 
 plt.tight_layout()
-plt.show()
+# plt.show()
 
 """### Types and Stats relationship."""
 
@@ -423,7 +423,7 @@ for i, feature in enumerate(features_to_plot):
     plt.xticks(rotation=45, ha='right')
 
 plt.tight_layout()
-plt.show()
+# plt.show()
 
 """### Identifing imbalanced classes
 
@@ -460,7 +460,7 @@ else:
 y = df_selected['rank_legendary']
 sns.countplot(x=y)
 plt.title("Class Distribution")
-plt.show()
+# plt.show()
 
 """As we can see there are imbalanced classes.
 
@@ -628,7 +628,7 @@ y_pred = model.predict(x_test)
 accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy}")
 
-print(classification_report(y_test, y_pred))
+# print(classification_report(y_test, y_pred))
 
 # Plot confusion matrix
 cm = confusion_matrix(y_test, y_pred)
@@ -639,7 +639,7 @@ sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
 plt.title('Confusion Matrix')
-plt.show()
+# plt.show()
 
 ## Below we are using the data USING SMOTE technique
 
@@ -655,7 +655,7 @@ y_pred = model.predict(x_test_smote) # Predict on the original test set (x_test)
 accuracy = accuracy_score(y_test_smote, y_pred) # y_test_smote is the correct target for the test set
 print(f"Accuracy: {accuracy}")
 
-print(classification_report(y_test_smote, y_pred))
+# print(classification_report(y_test_smote, y_pred))
 
 # Plot confusion matrix
 cm = confusion_matrix(y_test_smote, y_pred)
@@ -666,7 +666,7 @@ sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
 plt.title('Confusion Matrix')
-plt.show()
+# plt.show()
 
 """## 6. Train the Model
 
@@ -863,10 +863,10 @@ y_pred = model.predict(x_test)
 
 # Print evaluation metrics
 print("Classification Report:")
-print(classification_report(y_test, y_pred))
+# print(classification_report(y_test, y_pred))
 
 print("Confusion Matrix:")
-print(confusion_matrix(y_test, y_pred))
+# print(confusion_matrix(y_test, y_pred))
 
 """## How to Interpret
 
@@ -896,3 +896,45 @@ This project is just the beginning of your data science journey. You can further
 
 Thank you for joining us on this adventure through the Pokémon universe. We hope you’ve enjoyed exploring the data and building your first classification model. Remember, the world of data science is vast and full of exciting possibilities. Keep learning, experimenting, and discovering new insights. Who knows what amazing discoveries await you in your next project?
 """
+
+# Creating a input to the user fill and to test the model
+
+# Example of new Pokémon data (height, weight, hp, atk, def, spatk, spdef, speed, total_stats)
+
+def check_pokemon_legendary():
+    
+    new_pokemon = []
+
+    keepGoing = True
+
+    while(keepGoing):
+
+        name_of_pokemon = input("Name of the Pokémon: ")
+        new_pokemon.append(float(input("Height: ")))
+        new_pokemon.append(float(input("Weight: ")))
+        new_pokemon.append(int(input("HP: ")))
+        new_pokemon.append(int(input("Attack: ")))
+        new_pokemon.append(int(input("Defense: ")))
+        new_pokemon.append(int(input("Special Attack: ")))
+        new_pokemon.append(int(input("Special Defense: ")))
+        new_pokemon.append(int(input("Speed: ")))
+        new_pokemon.append(sum(new_pokemon[2:8]))  # Total stats
+
+        # Convert new Pokémon data to DataFrame with the same column names as the training data
+
+        new_pokemon_df = pd.DataFrame([new_pokemon], columns=x_train.columns)
+
+        # Make predictions for new data
+        new_predictions = modelSmote.predict(new_pokemon_df)
+        if new_predictions[0] == 1:
+            print(f"{name_of_pokemon} is a Legendary Pokémon!")
+        else:
+            print(f"{name_of_pokemon} is not a Legendary Pokémon.")
+
+        keepGoing = input("Do you want to continue? (y/n) ") == "y"
+
+    print("Thank you for using our Pokémon classification model!")
+
+
+if __name__ == "__main__":
+    check_pokemon_legendary()
